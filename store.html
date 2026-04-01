@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | Vanasaga ID</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="store.css">
+</head>
+
+<body class="fade-in">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/Vana.png" alt="Logo" class="nav-logo-img">
+                VANASAGA<span>ID</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="store.html" class="active">Store</a></li>
+                <li><a href="https://discord.gg/8zu5UNNpNn" target="_blank">Discord</a></li>
+            </ul>
+
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-nav-overlay" id="mobile-nav">
+        <div class="mobile-nav-links">
+            <a href="index.html" onclick="toggleMenu()">BERANDA</a>
+            <a href="store.html" onclick="toggleMenu()">STORE</a>
+            <a href="https://discord.gg/8zu5UNNpNn" target="_blank">DISCORD</a>
+        </div>
+    </div>
+
+    <main class="store-main">
+        <section class="store">
+            <h1 class="section-title slide-up">Rank Price List</h1>
+            <p class="subtitle slide-up delay-1">Pilih rank favoritmu dan dukung server Vanasaga agar terus berkembang.</p>
+            <div class="store-grid slide-up delay-2" id="storeGrid"></div>
+        </section>
+    </main>
+
+    <div id="featureModal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="font-weight: 800; letter-spacing: -1px; margin-bottom: 10px;"></h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+    <script src="store.js"></script>
+</body>
+</html>

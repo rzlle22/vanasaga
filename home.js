@@ -1,5 +1,6 @@
 /* =========================================
    VANASAGA HOME CORE ENGINE - 2026
+   (Optimized with Dynamic Server Status)
    ========================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,27 +72,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // --- 4. REAL-TIME PLAYER COUNT ---
-    async function fetchPlayers() {
-        const countElement = document.getElementById('player-count');
-        if (!countElement) return;
+    // --- 4. REAL-TIME PLAYER COUNT & DYNAMIC STATUS DOT ---
+    async function cekStatusServer() {
+        const ipServer = 'vanasagaid.xyz'; // IP Server Kamu
+        const titikStatus = document.getElementById('server-dot');
+        const teksStatus = document.getElementById('server-status-text');
+
+        // Cegah error jika elemen tidak ditemukan (misal saat berada di halaman store)
+        if (!titikStatus || !teksStatus) return;
 
         try {
-            // Menggunakan API publik mcstatus.io untuk vanasagaid.xyz
-            const response = await fetch('https://api.mcstatus.io/v2/status/java/vanasagaid.xyz');
+            // Menggunakan API publik mcsrvstat.us
+            const response = await fetch(`https://api.mcsrvstat.us/2/${ipServer}`);
             const data = await response.json();
-            
+
+            // Bersihkan class bawaan
+            titikStatus.classList.remove('online', 'offline');
+
             if (data.online) {
-                countElement.innerText = `${data.players.online} / ${data.players.max}`;
+                // Jika server ONLINE
+                titikStatus.classList.add('online');
+                teksStatus.innerHTML = `Server Online - <span style="color: #22c55e; font-weight: 800;">${data.players.online}</span> Pemain`;
             } else {
-                countElement.innerText = "Server Offline";
+                // Jika server OFFLINE
+                titikStatus.classList.add('offline');
+                teksStatus.innerHTML = '<span style="color: #ef4444; font-weight: 800;">Server Offline</span>';
             }
         } catch (error) {
-            console.warn("Gagal mengambil data pemain.");
+            console.warn("Gagal mengambil data status server:", error);
+            // Default ke offline jika gagal fetch API
+            titikStatus.classList.add('offline');
+            teksStatus.innerHTML = '<span style="color: #ef4444;">Gagal memuat status</span>';
         }
     }
 
-    // Jalankan saat load dan refresh tiap 1 menit
-    fetchPlayers();
-    setInterval(fetchPlayers, 60000);
+    // Jalankan fungsi cek status saat halaman dimuat dan refresh otomatis tiap 1 menit
+    cekStatusServer();
+    setInterval(cekStatusServer, 60000);
+
 });

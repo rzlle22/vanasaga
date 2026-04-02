@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Vanasaga ID</title>
 
+    <link rel="icon" type="image/png" href="assets/Vana.png">
+    <link rel="apple-touch-icon" href="assets/Vananobg.png">    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="home.css">
 </head>
 
@@ -14,14 +22,14 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="assets/Vana.png" alt="Logo" class="nav-logo-img">
+                <img src="assets/Vana.png" alt="Logo Vanasaga" width="40" height="40" class="nav-logo-img">
                 VANASAGA<span>ID</span>
             </div>
             
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="store.html">Store</a></li>
-                <li><a href="https://discord.gg/8zu5UNNpNn" target="_blank">Discord</a></li>
+                <li><a href="https://discord.gg/8zu5UNNpNn" target="_blank" rel="noopener noreferrer">Discord</a></li>
             </ul>
 
             <div class="menu-toggle" id="mobile-menu">
@@ -36,7 +44,7 @@
         <div class="mobile-nav-links">
             <a href="index.html" onclick="toggleMenu()">BERANDA</a>
             <a href="store.html" onclick="toggleMenu()">STORE</a>
-            <a href="https://discord.gg/8zu5UNNpNn" target="_blank">DISCORD</a>
+            <a href="https://discord.gg/8zu5UNNpNn" target="_blank" rel="noopener noreferrer">DISCORD</a>
         </div>
     </div>
 
@@ -61,32 +69,32 @@
             </div>
 
             <div class="status-bar slide-up delay-3">
-                <span class="pulse-dot"></span>
-                Server Online - <span id="player-count">Memuat...</span> Pemain
+                <span class="pulse-dot" id="server-dot"></span>
+                <span id="server-status-text">Memuat status...</span>
             </div>
 
             <div class="social-buttons slide-up delay-4">
-                <a href="https://minecraft-mp.com/server-s354726" class="btn" style="background: linear-gradient(135deg, #a855f7, #3b82f6); color: white; border: none; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);" target="_blank">
+                <a href="https://minecraft-mp.com/server-s354726" class="btn" style="background: linear-gradient(135deg, #a855f7, #3b82f6); color: white; border: none; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);" target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-star"></i> Vote Server
                 </a>
                 
-                <a href="https://chat.whatsapp.com/DTdERxBD7KFLJWAjvpsw8h" class="btn btn-wa" target="_blank">
+                <a href="https://chat.whatsapp.com/DTdERxBD7KFLJWAjvpsw8h" class="btn btn-wa" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-whatsapp"></i> WhatsApp
                 </a>
-                <a href="https://discord.gg/8zu5UNNpNn" class="btn btn-discord" target="_blank">
+                <a href="https://discord.gg/8zu5UNNpNn" class="btn btn-discord" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-discord"></i> Discord
                 </a>
-                <a href="https://www.tiktok.com/@vanasagaofficial" class="btn btn-tiktok" target="_blank">
+                <a href="https://www.tiktok.com/@vanasagaofficial" class="btn btn-tiktok" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-tiktok"></i> TikTok
                 </a>
-                <a href="https://saweria.co/vanasaga" class="btn btn-saweria" target="_blank">
+                <a href="https://saweria.co/vanasagaofficial" class="btn btn-saweria" target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-donate"></i> Saweria
                 </a>
             </div>
         </section>
     </main>
 
-    <script src="home.js"></script>
+    <script src="home.js" defer></script>
 
 </body>
 </html>

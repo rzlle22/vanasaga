@@ -10,91 +10,130 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="home.css">
 </head>
 
 <body class="fade-in">
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="assets/Vana.png" alt="Logo Vanasaga" width="40" height="40" class="nav-logo-img">
-                VANASAGA<span>ID</span>
+                <img src="assets/Vana.png" alt="Logo Vanasaga" class="nav-logo-img round-logo">
+                <span>VANASAGA<span class="highlight">ID</span></span>
             </div>
             
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="store.html">Store</a></li>
-                <li><a href="https://discord.gg/8zu5UNNpNn" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                <li><a href="#ranks">Apply Rank</a></li>
+                <li><a href="https://discord.gg/Yfk9rSXGnd" target="_blank" class="nav-btn-discord"><i class="fab fa-discord"></i> Discord</a></li>
             </ul>
 
             <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
 
     <div class="mobile-nav-overlay" id="mobile-nav">
         <div class="mobile-nav-links">
-            <a href="index.html" onclick="toggleMenu()">BERANDA</a>
-            <a href="store.html" onclick="toggleMenu()">STORE</a>
-            <a href="https://discord.gg/8zu5UNNpNn" target="_blank" rel="noopener noreferrer">DISCORD</a>
+            <a href="index.html" class="active">BERANDA</a>
+            <a href="store.html">STORE</a>
+            <a href="#ranks">APPLY RANK</a>
+            <a href="https://discord.gg/Yfk9rSXGnd" target="_blank" class="discord-mobile">DISCORD</a>
         </div>
     </div>
 
     <main>
         <section class="hero">
-            <h1 class="slide-up">Welcome To Vanasaga ID</h1>
-            <p class="subtitle slide-up delay-1">
-                Jelajahi petualangan tanpa batas dengan komunitas yang solid.
-            </p>
+            <div class="hero-content">
+                <h1 class="slide-up">Welcome To <br><span class="gradient-text">Vanasaga ID</span></h1>
+                <p class="subtitle slide-up delay-1">
+                    Jelajahi petualangan tanpa batas dengan komunitas yang solid. Bergabunglah sekarang dan ukir ceritamu!
+                </p>
 
-            <div class="ip-container slide-up delay-2">
-                <div class="ip-card floating" onclick="copyIP('vanasagaid.xyz')">
-                    <span class="java-title">JAVA EDITION</span>
-                    <span class="address">vanasagaid.xyz</span>
+                <div class="ip-container slide-up delay-2">
+                    <div class="ip-card floating glass-effect" onclick="copyIP('vanasagaid.xyz')">
+                        <div class="ip-icon java-icon"><i class="fas fa-desktop"></i></div>
+                        <div class="ip-info">
+                            <span class="platform-title">JAVA EDITION</span>
+                            <span class="address">vanasagaid.xyz</span>
+                        </div>
+                        <div class="copy-hint"><i class="far fa-copy"></i> Klik untuk Copy</div>
+                    </div>
+
+                    <div class="ip-card floating delay-float glass-effect" onclick="copyIP('vanasagaid.xyz', 19132)">
+                        <div class="ip-icon bedrock-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="ip-info">
+                            <span class="platform-title">BEDROCK EDITION</span>
+                            <span class="address">vanasagaid.xyz</span>
+                            <span class="port">Port: 19132</span>
+                        </div>
+                        <div class="copy-hint"><i class="far fa-copy"></i> Klik untuk Copy</div>
+                    </div>
                 </div>
 
-                <div class="ip-card floating delay-float" onclick="copyIP('vanasagaid.xyz')">
-                    <span class="bedrock-title">BEDROCK EDITION</span>
-                    <span class="address">vanasagaid.xyz</span>
-                    <span class="port">Port: 19132</span>
+                <div class="status-badge slide-up delay-3">
+                    <span class="pulse-dot" id="server-dot"></span>
+                    <span id="server-status-text">Mencari Server...</span>
+                </div>
+
+                <div class="social-buttons slide-up delay-4">
+                    <a href="https://minecraft-mp.com/server-s354726" target="_blank" class="btn btn-vote"><i class="fas fa-star"></i> Vote</a>
+                    <a href="https://discord.gg/Yfk9rSXGnd" target="_blank" class="btn btn-discord"><i class="fab fa-discord"></i> Discord</a>
+                    <a href="https://chat.whatsapp.com/DTdERxBD7KFLJWAjvpsw8h" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="https://www.tiktok.com/@vanasagaofficial" target="_blank" class="btn btn-tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+                    <a href="https://saweria.co/vanasagaofficial" target="_blank" class="btn btn-saweria"><i class="fas fa-donate"></i> Saweria</a>
                 </div>
             </div>
+            
+            <div class="scroll-indicator bounce">
+                <a href="#ranks"><i class="fas fa-chevron-down"></i></a>
+            </div>
+        </section>
 
-            <div class="status-bar slide-up delay-3">
-                <span class="pulse-dot" id="server-dot"></span>
-                <span id="server-status-text">Memuat status...</span>
+        <section id="ranks" class="ranks-section">
+            <div class="section-header">
+                <h2>Buka Potensimu di <span class="gradient-text">Vanasaga</span></h2>
+                <p>Dapatkan Rank khusus dengan berkontribusi untuk komunitas kami. Pilih jalurmu sekarang!</p>
             </div>
 
-            <div class="social-buttons slide-up delay-4">
-                <a href="https://minecraft-mp.com/server-s354726" class="btn" style="background: linear-gradient(135deg, #a855f7, #3b82f6); color: white; border: none; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-star"></i> Vote Server
-                </a>
-                
-                <a href="https://chat.whatsapp.com/J78EYmheoZGEayhel0Jd5o?mode=hqctcla" class="btn btn-wa" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="https://discord.gg/8zu5UNNpNn" class="btn btn-discord" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-discord"></i> Discord
-                </a>
-                <a href="https://www.tiktok.com/@vanasagaofficial" class="btn btn-tiktok" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-tiktok"></i> TikTok
-                </a>
-                <a href="https://saweria.co/vanasagaofficial" class="btn btn-saweria" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-donate"></i> Saweria
-                </a>
+            <div class="rank-cards-container">
+                <div class="rank-card glass-effect">
+                    <div class="rank-badge builder-badge"><i class="fas fa-hammer"></i> BUILDER</div>
+                    <h3>Rank Builder</h3>
+                    <p class="rank-desc">Punya bakat arsitektur dan kreativitas tinggi di Minecraft? Bergabunglah sebagai tim Builder resmi kami.</p>
+                    <ul class="rank-reqs">
+                        <li><i class="fas fa-check"></i> Usia minimal 14 Tahun</li>
+                        <li><i class="fas fa-check"></i> Memiliki portofolio build original</li>
+                        <li><i class="fas fa-check"></i> Paham WorldEdit & VoxelSniper</li>
+                    </ul>
+                    <a href="https://discord.gg/Yfk9rSXGnd" class="btn-apply" target="_blank">Apply via Discord <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="rank-card glass-effect">
+                    <div class="rank-badge media-badge"><i class="fas fa-video"></i> MEDIA</div>
+                    <h3>Rank Media</h3>
+                    <p class="rank-desc">Kreator konten YouTube atau TikTok? Dapatkan rank eksklusif dan bantu kembangkan komunitas Vanasaga.</p>
+                    <ul class="rank-reqs">
+                        <li><i class="fas fa-check"></i> Min. 50 Subs / 100 Followers</li>
+                        <li><i class="fas fa-check"></i> Upload konten Vanasaga rutin</li>
+                        <li><i class="fas fa-check"></i> Viewers aktif dan organik</li>
+                    </ul>
+                    <a href="https://discord.gg/Yfk9rSXGnd" class="btn-apply" target="_blank">Apply via Discord <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </section>
     </main>
 
-    <script src="home.js" defer></script>
+    <div id="toast" class="toast">IP Berhasil disalin!</div>
 
+    <script src="home.js"></script>
 </body>
 </html>

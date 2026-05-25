@@ -1,95 +1,248 @@
-// --- Deklarasi Variabel ---
-const mobileMenuBtn = document.getElementById('mobile-menu'); // Ini langsung nargetin <i> icon FontAwesome
-const mobileNav = document.getElementById('mobile-nav');
+/* =============================================
+   VANASAGA ID — home.js  (shared ALL pages)
+   v3.1 — bug-fixed, error-proof
+   ============================================= */
+(function () {
+  'use strict';
 
-// --- Fungsi Toggle Menu (Buka/Tutup) ---
-mobileMenuBtn.addEventListener('click', (e) => {
-    // Mencegah klik tembus ke bawah
-    e.stopPropagation(); 
-    
-    mobileNav.classList.toggle('active');
-    
-    // Ganti icon dari Garis Tiga (bars) jadi Silang (times)
-    if (mobileMenuBtn.classList.contains('fa-bars')) {
-        mobileMenuBtn.classList.replace('fa-bars', 'fa-times');
+  /* ── helper: safe querySelector ── */
+  function qs(sel)  { return document.querySelector(sel); }
+  function qsa(sel) { return Array.from(document.querySelectorAll(sel)); }
+
+  /* ══ Scroll Progress Bar ══ */
+  var prog = document.getElementById('scroll-progress');
+  if (prog) {
+    function onScrollProg() {
+      var el  = document.documentElement;
+      var top = el.scrollTop || document.body.scrollTop;
+      var h   = el.scrollHeight - el.clientHeight;
+      prog.style.width = (h > 0 ? (top / h * 100) : 0) + '%';
+    }
+    window.addEventListener('scroll', onScrollProg, { passive: true });
+    onScrollProg();
+  }
+
+  /* ══ Navbar scroll ══ */
+  var nav = qs('.navbar');
+  if (nav) {
+    function onNavScroll() {
+      if (window.scrollY > 40) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', onNavScroll, { passive: true });
+    onNavScroll();
+  }
+
+  /* ══ Mobile drawer ══
+     Try both class names used in index.html and store.html */
+  var ham      = qs('.hamburger');
+  var drawer   = qs('.drawer') || qs('.mobile-drawer');
+  var backdrop = qs('.drawer-back') || qs('.drawer-backdrop');
+
+  if (ham && drawer && backdrop) {
+    function drawerOpen() {
+      ham.classList.add('open');
+      drawer.classList.add('on');
+      backdrop.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+    function drawerClose() {
+      ham.classList.remove('open');
+      drawer.classList.remove('on');
+      backdrop.classList.remove('on');
+      document.body.style.overflow = '';
+    }
+    function drawerToggle(e) {
+      e.stopPropagation();
+      if (drawer.classList.contains('on')) {
+        drawerClose();
+      } else {
+        drawerOpen();
+      }
+    }
+
+    ham.addEventListener('click', drawerToggle);
+    ham.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        drawerToggle(e);
+      }
+    });
+    backdrop.addEventListener('click', drawerClose);
+    qsa('a', drawer).forEach(function (a) {
+      a.addEventListener('click', drawerClose);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') drawerClose();
+    });
+  }
+
+  /* ══ Copy IP ══ */
+  window.copyIP = function (ip) {
+    function done() { window.showToast('\u2713 ' + ip + ' berhasil disalin!'); }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(ip).then(done).catch(function () { fallbackCopy(ip, done); });
     } else {
-        mobileMenuBtn.classList.replace('fa-times', 'fa-bars');
+      fallbackCopy(ip, done);
     }
-});
+  };
 
-// --- Fungsi Tutup Menu saat Link Diklik ---
-const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
-mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileNav.classList.remove('active');
-        mobileMenuBtn.classList.replace('fa-times', 'fa-bars'); // Balikin icon ke garis tiga
-    });
-});
+  function fallbackCopy(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity  = '0';
+    ta.style.top      = '-999px';
+    ta.style.left     = '-999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); cb(); } catch (err) { /* silent */ }
+    document.body.removeChild(ta);
+  }
 
-// --- FITUR BARU: Klik di luar menu untuk menutup ---
-document.addEventListener('click', (e) => {
-    // Kalau menu lagi kebuka, dan yang diklik BUKAN area menu & BUKAN tombol iconnya
-    if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && e.target !== mobileMenuBtn) {
-        mobileNav.classList.remove('active');
-        mobileMenuBtn.classList.replace('fa-times', 'fa-bars');
-    }
-});
+  /* ══ Toast ══ */
+  window.showToast = function (msg) {
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg || '\u2713 Done!';
+    t.classList.add('show');
+    clearTimeout(t._vanasagaTimer);
+    t._vanasagaTimer = setTimeout(function () { t.classList.remove('show'); }, 2800);
+  };
 
-// --- Fungsi Copy IP & Toast Notification ---
-function copyIP(ip, port = null) {
-    let textToCopy = ip;
-    if (port) {
-        textToCopy = `${ip} (Port: ${port})`;
-    }
+  /* ══ Server Status (home page only) ══ */
+  var sTxt = document.getElementById('sv-text');
+  var sDot = document.getElementById('sv-dot');
+  if (sTxt && sDot) {
+    fetch('https://api.mcsrvstat.us/3/vanasagaid.xyz')
+      .then(function (r) {
+        if (!r.ok) throw new Error('network');
+        return r.json();
+      })
+      .then(function (d) {
+        if (d && d.online) {
+          var on = (d.players && d.players.online != null) ? d.players.online : 0;
+          var mx = (d.players && d.players.max   != null) ? d.players.max   : '?';
+          sTxt.innerHTML = '<strong style="color:var(--tx)">' + on + '</strong>/' + mx + ' Pemain Online';
+        } else {
+          sTxt.textContent = 'Server Offline';
+          sDot.style.cssText = 'background:#f87171;box-shadow:0 0 7px #f87171;animation:none';
+        }
+      })
+      .catch(function () {
+        sTxt.textContent = 'Status tidak tersedia';
+        sDot.style.cssText = 'background:var(--gold);box-shadow:0 0 7px var(--gold);animation:none';
+      });
+  }
 
-    navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast();
-    }).catch(err => {
-        console.error('Gagal menyalin IP: ', err);
-    });
-}
-
-function showToast() {
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
-
-// --- Fetch Real Server Status ---
-document.addEventListener("DOMContentLoaded", () => {
-    const statusText = document.getElementById('server-status-text');
-    const statusDot = document.getElementById('server-dot');
-    
-    // IP Server kamu
-    const serverIP = 'vanasagaid.xyz';
-
-    // Mengambil data real-time menggunakan API dari mcsrvstat.us
-    fetch(`https://api.mcsrvstat.us/3/${serverIP}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.online) {
-                // JIKA SERVER ON
-                // Mengambil angka real dari API
-                const playersOnline = data.players.online; 
-                
-                statusText.innerHTML = `<strong style="color:white;">${playersOnline}</strong> Players Online`;
-                statusDot.style.backgroundColor = "var(--success)"; // Hijau
-                statusDot.style.boxShadow = "0 0 10px var(--success)";
-            } else {
-                // JIKA SERVER OFF
-                statusText.innerText = "Server Offline";
-                statusDot.style.backgroundColor = "#ef4444"; // Merah
-                statusDot.style.boxShadow = "0 0 10px #ef4444"; // Glow Merah
-            }
-        })
-        .catch(error => {
-            // JIKA API GAGAL DIMUAT (Misal koneksi internet user jelek)
-            console.error('Error memuat status server:', error);
-            statusText.innerText = "Gagal memuat status";
-            statusDot.style.backgroundColor = "#f59e0b"; // Warna Orange peringatan
-            statusDot.style.boxShadow = "0 0 10px #f59e0b";
+  /* ══ Intersection Observer — scroll reveal ══ */
+  var revealEls = qsa('.reveal');
+  if (revealEls.length) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
         });
-});
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    }
+  }
+
+  /* ══ Back to Top ══ */
+  var btt = document.getElementById('back-top');
+  if (btt) {
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 300) {
+        btt.classList.add('show');
+      } else {
+        btt.classList.remove('show');
+      }
+    }, { passive: true });
+    btt.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ══ Particle Canvas (desktop only — saves mobile perf) ══ */
+  var canvas = document.getElementById('bg-canvas');
+  if (canvas && window.innerWidth > 768) {
+    var ctx  = canvas.getContext('2d');
+    var COLS = ['#c0a3ff', '#b0b8ff', '#f5c842', '#4ade80', '#67e8f9', '#f472b6'];
+    var BS   = 7;
+    var W, H, pts, raf;
+    var last = 0;
+
+    /* mkPt declared BEFORE resize so resize can call it */
+    function mkPt(bot) {
+      return {
+        x  : Math.random() * W,
+        y  : bot ? H + BS : Math.random() * H,
+        vx : (Math.random() - 0.5) * 0.22,
+        vy : -(Math.random() * 0.32 + 0.07),
+        c  : COLS[Math.floor(Math.random() * COLS.length)],
+        a  : Math.random() * 0.18 + 0.04,
+        s  : Math.floor(BS * (0.5 + Math.random() * 0.5))
+      };
+    }
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      pts = [];
+      for (var i = 0; i < 28; i++) pts.push(mkPt(false));
+    }
+
+    function tick(ts) {
+      raf = requestAnimationFrame(tick);
+      if (ts - last < 42) return;
+      last = ts;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.y < -BS * 2 || p.x < -20 || p.x > W + 20) {
+          pts[i] = mkPt(true);
+          continue;
+        }
+        ctx.globalAlpha = p.a;
+        ctx.fillStyle   = p.c;
+        ctx.fillRect(Math.floor(p.x), Math.floor(p.y), p.s, p.s);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+      } else {
+        last = 0;
+        raf  = requestAnimationFrame(tick);
+      }
+    });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 200);
+    }, { passive: true });
+
+    resize();
+    raf = requestAnimationFrame(tick);
+  }
+
+  /* helper used above */
+  function qsa(sel, root) {
+    return Array.from((root || document).querySelectorAll(sel));
+  }
+
+})();

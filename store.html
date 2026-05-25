@@ -1,207 +1,441 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <title>Store | Vanasaga ID</title>
-
-    <link rel="icon" type="image/png" href="assets/Vana.png">
+    <meta name="description" content="Beli rank, skill max, in-game money, dan custom tag eksklusif untuk server Minecraft Vanasaga ID."/>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/Vana.png"/>
+    <link rel="apple-touch-icon" href="assets/Vananobg.png"/>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="store.css">
+    <link rel="stylesheet" href="home.css"/>
+    <link rel="stylesheet" href="store.css"/>
 </head>
+<body>
 
-<body class="fade-in">
+    <div id="scroll-progress"></div>
+
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="assets/Vana.png" alt="Logo Vanasaga" class="nav-logo-img round-logo">
-                <span>VANASAGA<span class="highlight">ID</span></span>
-            </div>
-            
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="nav-inner">
+            <a href="index.html" class="logo-link">
+                <img src="assets/Vana.png" alt="Vanasaga Logo" class="logo-img"/>
+                <span class="logo-name">VANASAGA<em>ID</em></span>
+            </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="store.html" class="active">Store</a></li>
                 <li><a href="index.html#ranks">Apply Rank</a></li>
-                <li><a href="https://discord.gg/8zu5UNNpNn" target="_blank" class="nav-btn-discord"><i class="fab fa-discord"></i> Discord</a></li>
+                <li><a href="https://discord.gg/Yfk9rSXGnd" target="_blank" rel="noopener" class="nav-discord"><i class="fab fa-discord"></i> Discord</a></li>
             </ul>
-
-            <div class="menu-toggle" id="mobile-menu">
-                <i class="fas fa-bars"></i>
+            <div class="hamburger" role="button" tabindex="0" aria-label="Buka menu">
+                <span></span><span></span><span></span>
             </div>
         </div>
     </nav>
 
-    <div class="mobile-nav-overlay" id="mobile-nav">
-        <div class="mobile-nav-links">
+    <div class="drawer-back"></div>
+    <nav class="drawer" aria-label="Mobile Navigation">
+        <div class="drawer-nav">
             <a href="index.html">BERANDA</a>
             <a href="store.html" class="active">STORE</a>
             <a href="index.html#ranks">APPLY RANK</a>
-            <a href="https://discord.gg/8zu5UNNpNn" target="_blank">DISCORD</a>
+            <a href="https://discord.gg/Yfk9rSXGnd" target="_blank" rel="noopener" class="d-discord"><i class="fab fa-discord"></i> DISCORD</a>
+        </div>
+    </nav>
+
+    <div class="store-hero">
+        <div class="sec-tag" style="margin-bottom:1.2rem">ITEM PREMIUM</div>
+        <h1>TOKO <span class="gradient-text">VANASAGA</span></h1>
+        <p class="store-sub">Upgrade pengalamanmu dengan rank, skill, dan item eksklusif.<br>Pembayaran instan & aman via WhatsApp.</p>
+
+        <div class="store-tabs">
+            <button class="tab-btn active" data-tab="tab-ranks">
+                <i class="fas fa-crown"></i> Ranks
+            </button>
+            <button class="tab-btn" data-tab="tab-skills">
+                <i class="fas fa-fire"></i> Skills
+            </button>
+            <button class="tab-btn" data-tab="tab-money">
+                <i class="fas fa-coins"></i> Money
+            </button>
         </div>
     </div>
 
-    <main>
-        <section class="store-header">
-            <h1 class="slide-up">Vanasaga <span class="gradient-text">Webstore</span></h1>
-            <p class="subtitle slide-up delay-1">Dukung server kami dan dapatkan berbagai keuntungan eksklusif di dalam game!</p>
-            
-            <div class="store-tabs slide-up delay-2">
-                <button class="tab-btn active" onclick="openTab('tab-ranks')"><i class="fas fa-crown"></i> Ranks</button>
-                <button class="tab-btn" onclick="openTab('tab-skills')"><i class="fas fa-magic"></i> Skills</button>
-                <button class="tab-btn" onclick="openTab('tab-money')"><i class="fas fa-coins"></i> Money</button>
-                <button class="tab-btn" onclick="openTab('tab-tags')"><i class="fas fa-tags"></i> Tags</button>
-            </div>
-        </section>
+    <div class="store-body">
 
-        <section class="store-content slide-up delay-3">
-            
-            <div id="tab-ranks" class="tab-content active">
-                <div class="product-grid">
-                    <div class="product-card glass-effect">
-                        <div class="product-icon rank-icon"><i class="fas fa-chess-pawn"></i></div>
-                        <h3>Viscount</h3>
-                        <p class="price">Rp 5.000 <span>/Bulan</span></p>
-                        <ul class="product-features">
-                            <li><i class="fas fa-check"></i> Akses /heal, /feed, /craft</li>
-                            <li><i class="fas fa-check"></i> Viscount Kit (7d)</li>
-                            <li><i class="fas fa-check"></i> $100.000 Money</li>
-                            <li><i class="fas fa-check"></i> 10 PlayerVault</li>
-                            <li><i class="fas fa-check"></i> 1.000 Claimblock</li>
-                        </ul>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a>
-                    </div>
-                    <div class="product-card glass-effect">
-                        <div class="product-icon rank-icon" style="color: #60a5fa;"><i class="fas fa-chess-knight"></i></div>
-                        <h3>Archduke</h3>
-                        <p class="price">Rp 25.000 <span>/Bulan</span></p>
-                        <ul class="product-features">
-                            <li><i class="fas fa-check"></i> Semua fitur Viscount</li>
-                            <li><i class="fas fa-check"></i> Akses /fly, /anvil, /echest</li>
-                            <li><i class="fas fa-check"></i> Archduke Kit (7d)</li>
-                            <li><i class="fas fa-check"></i> $250.000 Money</li>
-                            <li><i class="fas fa-check"></i> 2.500 Claimblock</li>
-                        </ul>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a>
-                    </div>
-                    <div class="product-card glass-effect">
-                        <div class="product-icon rank-icon" style="color: #34d399;"><i class="fas fa-chess-bishop"></i></div>
-                        <h3>Royalty</h3>
-                        <p class="price">Rp 60.000 <span>/Permanen</span></p>
-                        <ul class="product-features">
-                            <li><i class="fas fa-check"></i> Semua fitur Archduke</li>
-                            <li><i class="fas fa-check"></i> Akses /repair, /tp, /enchant</li>
-                            <li><i class="fas fa-check"></i> Royalty Kit (7d)</li>
-                            <li><i class="fas fa-check"></i> $500.000 Money</li>
-                            <li><i class="fas fa-check"></i> 10.000 Claimblock</li>
-                        </ul>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a>
-                    </div>
-                    <div class="product-card glass-effect">
-                        <div class="product-icon rank-icon" style="color: #f472b6;"><i class="fas fa-chess-rook"></i></div>
-                        <h3>Emperor</h3>
-                        <p class="price">Rp 120.000 <span>/Permanen</span></p>
-                        <ul class="product-features">
-                            <li><i class="fas fa-check"></i> Semua fitur Royalty</li>
-                            <li><i class="fas fa-check"></i> /repair all, /vsh, /near</li>
-                            <li><i class="fas fa-check"></i> Emperor Kit (7d)</li>
-                            <li><i class="fas fa-check"></i> $700.000 Money</li>
-                            <li><i class="fas fa-check"></i> 25.000 Claimblock</li>
-                        </ul>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a>
-                    </div>
-                    <div class="product-card glass-effect">
-                        <div class="product-icon rank-icon" style="color: #a855f7;"><i class="fas fa-chess-queen"></i></div>
-                        <h3>Overlord</h3>
-                        <p class="price">Rp 200.000 <span>/Permanen</span></p>
-                        <ul class="product-features">
-                            <li><i class="fas fa-check"></i> Semua fitur Emperor</li>
-                            <li><i class="fas fa-check"></i> /weather, /glow, /rage, dll</li>
-                            <li><i class="fas fa-check"></i> Overlord Kit (7d)</li>
-                            <li><i class="fas fa-check"></i> $2.000.000 Money & 75 PV</li>
-                            <li><i class="fas fa-check"></i> 50.000 Claimblock</li>
-                        </ul>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a>
-                    </div>
-                    <div class="product-card glass-effect" style="border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);">
-                        <div class="product-icon rank-icon" style="color: #fbbf24;"><i class="fas fa-chess-king"></i></div>
-                        <h3>Godking</h3>
-                        <p class="price" style="color: #fbbf24;">Rp 350.000 <span>/Permanen</span></p>
-                        <ul class="product-features">
-                            <li><i class="fas fa-check"></i> Semua fitur Overlord</li>
-                            <li><i class="fas fa-check"></i> /ignite, /dmc, /kill, /tp prem</li>
-                            <li><i class="fas fa-check"></i> GodKing Kit (7d)</li>
-                            <li><i class="fas fa-check"></i> $5.000.000 Money & 100 PV</li>
-                            <li><i class="fas fa-check"></i> 100.000 Claimblock</li>
-                        </ul>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: #fbbf24; color: black;">Buy</a>
-                    </div>
+        <div class="tab-panel active" id="tab-ranks">
+            <div class="product-grid">
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-chess-pawn"></i></div>
+                    <h3>Viscount</h3>
+                    <p class="desc">Dapatkan akses command dasar premium dan keuntungan spesial untuk memulai perjalananmu.</p>
+                    <div class="price-tag">Rp 15.000 <sub>/Bulan</sub></div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle"></i> Akses /heal, /feed, /craft</li>
+                        <li><i class="fas fa-check-circle"></i> Viscount Kit (cooldown 7 hari)</li>
+                        <li><i class="fas fa-check-circle"></i> $100.000 uang in-game</li>
+                        <li><i class="fas fa-check-circle"></i> 10 PlayerVault slots & 1.000 Claimblock</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20rank%20Viscount" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
                 </div>
-            </div>
 
-            <div id="tab-skills" class="tab-content">
-                <div class="product-grid">
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-seedling"></i></div><h3>Farming Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-tree"></i></div><h3>Foraging Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-gem"></i></div><h3>Mining Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-fish"></i></div><h3>Fishing Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-trowel"></i></div><h3>Excavation Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-bullseye"></i></div><h3>Archery Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-shield-alt"></i></div><h3>Defense Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-khanda"></i></div><h3>Fighting Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-heartbeat"></i></div><h3>Endurance Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-running"></i></div><h3>Agility Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon skill-icon"><i class="fas fa-flask"></i></div><h3>Alchemy Lvl Max</h3><p class="price">Rp 30.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-chess-knight"></i></div>
+                    <h3>Archduke</h3>
+                    <p class="desc">Rank menengah dengan fitur terbang dan akses brankas portabel untuk kemudahan bermain.</p>
+                    <div class="price-tag">Rp 25.000 <sub>/Bulan</sub></div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle"></i> Semua fitur Viscount</li>
+                        <li><i class="fas fa-check-circle"></i> Akses /fly, /anvil, /echest</li>
+                        <li><i class="fas fa-check-circle"></i> Archduke Kit (cooldown 7 hari)</li>
+                        <li><i class="fas fa-check-circle"></i> $250.000 Money & 2.500 Claimblock</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20rank%20Archduke" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
                 </div>
-            </div>
 
-            <div id="tab-money" class="tab-content">
-                <div class="product-grid">
-                    <div class="product-card glass-effect"><div class="product-icon money-icon"><i class="fas fa-coins"></i></div><h3>$250k Money</h3><p class="price">Rp 10.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon money-icon"><i class="fas fa-sack-dollar"></i></div><h3>$500k Money</h3><p class="price">Rp 20.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon money-icon"><i class="fas fa-gem"></i></div><h3>$1M Money</h3><p class="price">Rp 40.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect"><div class="product-icon money-icon" style="color: #fbbf24;"><i class="fas fa-vault"></i></div><h3>$2.5M Money</h3><p class="price">Rp 100.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
-                    <div class="product-card glass-effect" style="border-color: #fbbf24;"><div class="product-icon money-icon" style="color: #fbbf24;"><i class="fas fa-chart-line"></i></div><h3>$5M Money</h3><p class="price">Rp 180.000</p><a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--primary); color: white;">Buy</a></div>
+                <div class="product-card card-rose">
+                    <div class="card-icon"><i class="fas fa-chess-bishop"></i></div>
+                    <h3>Royalty</h3>
+                    <p class="desc">Kasta bangsawan yang memberikan akses personalisasi karakter dan workbench portabel.</p>
+                    <div class="price-tag">Rp 60.000 <sub>/Bulan</sub></div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle"></i> Semua fitur Archduke</li>
+                        <li><i class="fas fa-check-circle"></i> Akses /hat, /nick, /workbench</li>
+                        <li><i class="fas fa-check-circle"></i> Royalty Kit (cooldown 7 hari)</li>
+                        <li><i class="fas fa-check-circle"></i> $400.000 Money & 10.000 Claimblock</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20rank%20Royalty" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
                 </div>
-            </div>
 
-            <div id="tab-tags" class="tab-content">
-                <div class="product-grid">
-                    <div class="product-card glass-effect">
-                        <div class="product-icon tag-icon"><i class="fas fa-wheat-awn"></i></div>
-                        <h3>[Farmer] Tag</h3>
-                        <p class="price" style="color: var(--success);">GRATIS</p>
-                        <div class="tag-condition"><strong>Syarat:</strong> Level Farming 50 + 1000 Wheat</div>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--success); color: white;">Claim</a>
-                    </div>
-                    <div class="product-card glass-effect">
-                        <div class="product-icon tag-icon"><i class="fas fa-hammer"></i></div>
-                        <h3>[Builder] Tag</h3>
-                        <p class="price" style="color: var(--success);">GRATIS</p>
-                        <div class="tag-condition"><strong>Syarat:</strong> 100 Jam Playtime + Menang Build Event</div>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--success); color: white;">Claim</a>
-                    </div>
-                    <div class="product-card glass-effect">
-                        <div class="product-icon tag-icon"><i class="fas fa-khanda"></i></div>
-                        <h3>[Fighter] Tag</h3>
-                        <p class="price" style="color: var(--success);">GRATIS</p>
-                        <div class="tag-condition"><strong>Syarat:</strong> 100 PVP Kills + Level Fighting 50</div>
-                        <a href="https://wa.me/6285136735426" target="_blank" class="btn-buy" style="background: var(--success); color: white;">Claim</a>
-                    </div>
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-chess-rook"></i></div>
+                    <h3>Emperor</h3>
+                    <div class="popular-badge">POPULER</div>
+                    <p class="desc">Kuasai server dengan fitur repair instan dan utilitas tinggi untuk mempermudah petualanganmu.</p>
+                    <div class="price-tag">Rp 120.000 <sub>/Bulan</sub></div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle gold"></i> Semua fitur Royalty</li>
+                        <li><i class="fas fa-check-circle gold"></i> /repair all, /vsh, /near</li>
+                        <li><i class="fas fa-check-circle gold"></i> Emperor Kit (cooldown 7 hari)</li>
+                        <li><i class="fas fa-check-circle gold"></i> $700.000 Money & 25.000 Claimblock</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20rank%20Emperor" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
                 </div>
-            </div>
 
-        </section>
-    </main>
+                <div class="product-card card-purple">
+                    <div class="card-icon"><i class="fas fa-chess-queen"></i></div>
+                    <h3>Overlord</h3>
+                    <p class="desc">Rank super eksklusif permanen dengan kendali atas cuaca dan kekuatan luar biasa.</p>
+                    <div class="price-tag">Rp 200.000 <sub>/Permanen</sub></div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle"></i> Semua fitur Emperor</li>
+                        <li><i class="fas fa-check-circle"></i> /weather, /glow, /rage + lainnya</li>
+                        <li><i class="fas fa-check-circle"></i> Overlord Kit (cooldown 7 hari)</li>
+                        <li><i class="fas fa-check-circle"></i> $2.000.000 Money, 75 PV & 50.000 Claimblock</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20rank%20Overlord" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="popular-badge">BEST VALUE</div>
+                    <div class="card-icon"><i class="fas fa-chess-king"></i></div>
+                    <h3>Godking</h3>
+                    <p class="desc">Kasta tertinggi. Jadilah penguasa mutlak Vanasaga dengan semua fitur tanpa batas.</p>
+                    <div class="price-tag">Rp 300.000 <sub>/Permanen</sub></div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-gem gold"></i> Semua fitur Overlord</li>
+                        <li><i class="fas fa-gem gold"></i> /ignite, /dmc, /kill, /tp premium</li>
+                        <li><i class="fas fa-gem gold"></i> GodKing Kit (cooldown 7 hari)</li>
+                        <li><i class="fas fa-gem gold"></i> $5.000.000 Money, 100 PV & 100.000 Claimblock</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20rank%20Godking" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-panel" id="tab-skills">
+            <div class="product-grid">
+
+                <div class="product-card card-rose">
+                    <div class="card-icon"><i class="fas fa-khanda"></i></div>
+                    <h3>Fighting Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Meningkatkan damage serangan, efek bleed, parry, hingga lightning blade ⚡</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Fighting" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-rose">
+                    <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Archery Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Panah lebih sakit, tembus pertahanan, stun effect, dan charged shot 🏹</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Archery" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Defense Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Menambah pertahanan, immune debuff, shielding, dan absorption 🛡️</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Defense" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-running"></i></div>
+                    <h3>Agility Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Gerakan lebih cepat, lompatan tinggi, ringan saat jatuh ⚡</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Agility" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-rose">
+                    <div class="card-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>Endurance Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Kelaparan lebih lama, regenerasi lebih cepat, dan daya tahan lebih kuat 🍖</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Endurance" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-gem"></i></div>
+                    <h3>Mining Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Menambang lebih cepat, drop lebih bagus, dan speed mine ⛏️</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Mining" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-trowel"></i></div>
+                    <h3>Excavation Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Gali tanah dan block lebih cepat, peluang mendapatkan item langka 💎</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Excavation" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-tree"></i></div>
+                    <h3>Foraging Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Menebang pohon lebih mudah, efek treecapitator, dan drop kayu lebih banyak 🌲</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Foraging" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-seedling"></i></div>
+                    <h3>Farming Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Hasil panen lebih melimpah, pertumbuhan cepat, dan bountiful harvest 🌾</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Farming" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-cyan">
+                    <div class="card-icon"><i class="fas fa-fish"></i></div>
+                    <h3>Fishing Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Peluang mendapatkan item langka lebih tinggi, epic catch, dan treasure hunter 🎣</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Fishing" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-purple">
+                    <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    <h3>Alchemy Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Efek potion lebih kuat dan bertahan lebih lama 🧪</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Alchemy" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-purple">
+                    <div class="card-icon"><i class="fas fa-magic"></i></div>
+                    <h3>Enchanting Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Hoki enchant lebih bagus, xp lebih efisien, dan enchant menjadi lebih OP ✨</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Enchanting" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-purple">
+                    <div class="card-icon"><i class="fas fa-fire"></i></div>
+                    <h3>Sorcery Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Kekuatan magic dan skill sihir menjadi lebih dewa 🔥</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Sorcery" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-rose">
+                    <div class="card-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                    <h3>Healing Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Regenerasi lebih cepat, life steal, dan kemampuan revival ❤️</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Healing" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-hammer"></i></div>
+                    <h3>Forging Buff</h3>
+                    <div class="buff-badge"><i class="fas fa-arrow-up"></i> +500% EXP (1 Bulan)</div>
+                    <p class="desc">Repair item lebih mudah, penggunaan anvil lebih efisien, dan disenchanter 🔨</p>
+                    <div class="price-tag">Rp 25.000</div>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20Buff%20Skill%20Forging" target="_blank" class="btn-buy wa"><i class="fab fa-whatsapp"></i> Beli via WA</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-panel" id="tab-money">
+            <div class="product-grid">
+
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-coins"></i></div>
+                    <h3>$250.000</h3>
+                    <p class="desc">Paket uang in-game dasar untuk kebutuhan awal permainanmu.</p>
+                    <div class="price-tag">Rp 7.000</div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle gold"></i> $250.000 in-game money</li>
+                        <li><i class="fas fa-check-circle gold"></i> Langsung masuk ke akunmu</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20$250k%20Money" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-sack-dollar"></i></div>
+                    <h3>$500.000</h3>
+                    <p class="desc">Beli item dari player lain dengan lebih mudah dan cepat.</p>
+                    <div class="price-tag">Rp 15.000</div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle gold"></i> $500.000 in-game money</li>
+                        <li><i class="fas fa-check-circle gold"></i> Langsung masuk ke akunmu</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20$500k%20Money" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-gem"></i></div>
+                    <h3>$1.000.000</h3>
+                    <p class="desc">Mulai bangun kerajaan bisnismu di dalam server Vanasaga.</p>
+                    <div class="price-tag">Rp 30.000</div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle gold"></i> $1.000.000 in-game money</li>
+                        <li><i class="fas fa-check-circle gold"></i> Instan diproses Admin</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20$1M%20Money" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="card-icon"><i class="fas fa-vault"></i></div>
+                    <h3>$2.500.000</h3>
+                    <p class="desc">Miliki kapital besar untuk mendominasi lelang dan pasar server.</p>
+                    <div class="price-tag">Rp 80.000</div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle gold"></i> $2.500.000 in-game money</li>
+                        <li><i class="fas fa-check-circle gold"></i> Modal besar untuk faksi/kota</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20$2.5M%20Money" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+                <div class="product-card card-gold">
+                    <div class="popular-badge">BEST DEAL</div>
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>$5.000.000</h3>
+                    <p class="desc">Jadilah konglomerat Vanasaga dengan suntikan dana tak terbatas.</p>
+                    <div class="price-tag">Rp 159.000</div>
+                    <ul class="product-features">
+                        <li><i class="fas fa-check-circle gold"></i> $5.000.000 in-game money</li>
+                        <li><i class="fas fa-check-circle gold"></i> Transaksi super aman & instan</li>
+                    </ul>
+                    <a href="https://wa.me/6285136735426?text=Halo,%20saya%20mau%20beli%20$5M%20Money" target="_blank" rel="noopener" class="btn-buy wa">
+                        <i class="fab fa-whatsapp"></i> Beli via WA
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div><section class="partners-section">
+        <div class="partners-inner">
+            <div class="partners-title">PARTNER SERVERS</div>
+            <div class="partners-row">
+                <a href="https://www.anakemakstore.my.id/" target="_blank" rel="noopener" class="partner-chip reveal">
+                    <img src="assets/anakemak.png" alt="Anak Emak" onerror="this.style.display='none'"/>
+                    <span>Anak Emak</span>
+                </a>
+                <a href="https://www.instagram.com/nievan.works?" target="_blank" rel="noopener" class="partner-chip reveal reveal-d1">
+                    <img src="assets/partner1.png" alt="Nievan Creative Studio" onerror="this.style.display='none'"/>
+                    <span>Nievan Creative Studio</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="foot-inner">
+            <div class="foot-logo">
+                <img src="assets/Vana.png" alt="" style="width:26px;height:26px;border-radius:7px;border:1px solid var(--p-glow)"/>
+                VANASAGA<em>ID</em>
+            </div>
+            <nav class="foot-links" aria-label="Footer Links">
+                <a href="index.html">Home</a>
+                <a href="store.html">Store</a>
+                <a href="index.html#ranks">Apply Rank</a>
+                <a href="https://discord.gg/Yfk9rSXGnd" target="_blank" rel="noopener">Discord</a>
+                <a href="https://saweria.co/vanasagaofficial" target="_blank" rel="noopener">Donasi</a>
+            </nav>
+            <p class="foot-copy">
+                Vanasaga ID tidak berafiliasi dengan Mojang Studios atau Microsoft.<br>
+                Minecraft® adalah merek dagang terdaftar dari Mojang Studios.
+            </p>
+        </div>
+    </footer>
+
+    <button id="back-top" aria-label="Kembali ke atas"><i class="fas fa-chevron-up"></i></button>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="home.js"></script>
     <script src="store.js"></script>

@@ -115,29 +115,41 @@
   };
 
   /* ══ Server Status (home page only) ══ */
-  var sTxt = document.getElementById('sv-text');
-  var sDot = document.getElementById('sv-dot');
-  if (sTxt && sDot) {
-    fetch('https://api.mcsrvstat.us/3/vanasagaid.xyz')
-      .then(function (r) {
-        if (!r.ok) throw new Error('network');
-        return r.json();
-      })
-      .then(function (d) {
-        if (d && d.online) {
-          var on = (d.players && d.players.online != null) ? d.players.online : 0;
-          var mx = (d.players && d.players.max   != null) ? d.players.max   : '?';
-          sTxt.innerHTML = '<strong style="color:var(--tx)">' + on + '</strong>/' + mx + ' Pemain Online';
-        } else {
-          sTxt.textContent = 'Server Offline';
-          sDot.style.cssText = 'background:#f87171;box-shadow:0 0 7px #f87171;animation:none';
-        }
-      })
-      .catch(function () {
-        sTxt.textContent = 'Status tidak tersedia';
-        sDot.style.cssText = 'background:var(--gold);box-shadow:0 0 7px var(--gold);animation:none';
-      });
-  }
+  var sTxt = document.getElementById('sv-text');
+  var sDot = document.getElementById('sv-dot');
+  
+  if (sTxt && sDot) {
+    function checkServerStatus() {
+      fetch('https://api.mcsrvstat.us/3/vanasagaid.com')
+        .then(function (r) {
+          if (!r.ok) throw new Error('network');
+          return r.json();
+        })
+        .then(function (d) {
+          if (d && d.online) {
+            var on = (d.players && d.players.online != null) ? d.players.online : 0;
+            var mx = (d.players && d.players.max    != null) ? d.players.max    : '?';
+            sTxt.innerHTML = '<strong style="color:var(--tx)">' + on + '</strong>/' + mx + ' Pemain Online';
+            // Reset style dot jika server kembali online
+            sDot.style.cssText = ''; 
+          } else {
+            sTxt.textContent = 'Server Offline';
+            sDot.style.cssText = 'background:#f87171;box-shadow:0 0 7px #f87171;animation:none';
+          }
+        })
+        .catch(function () {
+          sTxt.textContent = 'Status tidak tersedia';
+          sDot.style.cssText = 'background:var(--gold);box-shadow:0 0 7px var(--gold);animation:none';
+        });
+    }
+
+    // 1. Panggil fungsinya saat halaman pertama kali dimuat
+    checkServerStatus();
+
+    // 2. Jalankan ulang fungsinya secara otomatis setiap X milidetik
+    // 30000 = 30 detik. Silakan ubah angkanya sesuai kebutuhan (10000 = 10 detik).
+    setInterval(checkServerStatus, 30000);
+  }
 
   /* ══ Intersection Observer — scroll reveal ══ */
   var revealEls = qsa('.reveal');

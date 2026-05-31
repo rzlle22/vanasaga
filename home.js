@@ -120,7 +120,7 @@
   
   if (sTxt && sDot) {
     function checkServerStatus() {
-      fetch('https://api.mcsrvstat.us/3/vanasagaid.com')
+      fetch('https://api.mcsrvstat.us/3/vanasaga.com')
         .then(function (r) {
           if (!r.ok) throw new Error('network');
           return r.json();
